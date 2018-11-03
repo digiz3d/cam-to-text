@@ -1,0 +1,11 @@
+.CameraRTC {
+    background-color: red;
+}
+
+.CameraRTC video {
+    background-color: greenyellow;
+}
+
+.CameraRTC canvas {
+    background-color: pink;
+}
