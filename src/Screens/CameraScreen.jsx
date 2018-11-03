@@ -1,9 +1,14 @@
-import React, { Component } from 'react';
-import CameraRtc from '../Components/CameraRtc';
+import React from 'react';
+import CameraRtc from '../Components/CameraRtc.jsx';
 import axios from 'axios';
+
+import FlipCameraIcon from '../Assets/Arrows.svg';
+import ShootIcon from '../Assets/Diaphragm.svg';
+import HistoryIcon from '../Assets/Time.svg';
+
 import './CameraScreen.css';
 
-class CameraScreen extends Component {
+class CameraScreen extends React.Component {
     constructor(props) {
         super(props);
 
@@ -26,9 +31,9 @@ class CameraScreen extends Component {
         this.setState({ facingMode: this.state.facingMode === "user" ? "environment" : "user" });
     }
 
-    sendToAzure(blob) {
+    sendToAzure(picture) {
         axios.post('https://westeurope.api.cognitive.microsoft.com/vision/v1.0/ocr?language=unk&detectOrientation=true',
-            blob,
+            picture,
             { headers: { "Content-Type": "application/octet-stream", "Ocp-Apim-Subscription-Key": "yourkey" } })
             .then(response => {
                 alert(JSON.stringify(response.data));
@@ -53,13 +58,30 @@ class CameraScreen extends Component {
                     width={this.state.width}
                     height={this.state.height}
                     ref={r => this.cameraRef = r}
-                    style={{ borderRadius: 10, position: 'absolute', top: 0, zIndex: 1 }}
+                    style={{ position: 'absolute', top: 0, zIndex: 1 }}
                 />
                 <div className="CameraUI">
                     <div className="BottomButtons">
-                        <button onClick={() => this.flipCamera()}>Flip camera</button>
-                        <button onClick={() => this.cameraRef.takePicture()}>GO</button>
-                        <button onClick={() => this.flipCamera()}>History</button>
+                        <img
+                            onClick={(e) => {
+                                e.preventDefault(); this.flipCamera();
+                            }}
+                            alt="Flip Camera"
+                            src={FlipCameraIcon}
+                        />
+                        <img
+                            className="ShootButton"
+                            onClick={(e) => {
+                                e.preventDefault(); this.cameraRef.takePicture();
+                            }}
+                            alt="Capture"
+                            src={ShootIcon}
+                        />
+                        <img
+                            onClick={(e) => { e.preventDefault(); this.props.history.push('/history'); }}
+                            alt="History"
+                            src={HistoryIcon}
+                        />
                     </div>
                 </div>
             </React.Fragment>

@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { Component } from 'react';
+import React from 'react';
 import './CameraRtc.css'
 
 const propTypes = {
@@ -10,7 +10,7 @@ const defaultProps = {
   onTakePicture: () => true,
 };
 
-class CameraRtc extends Component {
+class CameraRtc extends React.Component {
   constructor(props) {
     super(props);
 
@@ -60,7 +60,6 @@ class CameraRtc extends Component {
     if (this.stream && this.stream.getTracks()[0]) {
       this.stream.getTracks()[0].stop();
     }
-
 
     let resolutions = [3024, 2160, 1440, 1080, 720, 480, 360, 240];
     let res = resolutions[index];
