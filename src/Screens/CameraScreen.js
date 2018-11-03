@@ -9,7 +9,6 @@ class CameraScreen extends Component {
     }
 
     sendToAzure(blob) {
-
         axios.post('https://westeurope.api.cognitive.microsoft.com/vision/v1.0/ocr?language=unk&detectOrientation=true',
             blob,
             { headers: { "Content-Type": "application/octet-stream", "Ocp-Apim-Subscription-Key": "yourkey" } })
@@ -21,7 +20,7 @@ class CameraScreen extends Component {
                 alert('no');
                 console.warn(err);
             });
-
+            
     }
 
     render() {
@@ -29,7 +28,12 @@ class CameraScreen extends Component {
             <div>
                 <CameraRtc
                     onTakePicture={this.sendToAzure}
+                    facingMode="environment"
+                    width={160}
+                    height={0}
+                    ref={r => this.cameraRef = r}
                 />
+                <button onClick={() => this.cameraRef.takePicture()}>GO</button>
             </div>
         );
     }
