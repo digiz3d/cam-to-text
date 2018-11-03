@@ -1,11 +1,29 @@
 import React, { Component } from 'react';
 import CameraRtc from '../Components/CameraRtc';
 import axios from 'axios';
+import './CameraScreen.css';
 
 class CameraScreen extends Component {
     constructor(props) {
         super(props);
+
+        this.state = { width: 0, height: 0, facingMode: "environment" };
+
         this.sendToAzure = this.sendToAzure.bind(this);
+        this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
+    }
+
+    componentDidMount() {
+        this.updateWindowDimensions();
+        window.addEventListener('resize', this.updateWindowDimensions);
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener('resize', this.updateWindowDimensions);
+    }
+
+    flipCamera() {
+        this.setState({ facingMode: this.state.facingMode === "user" ? "environment" : "user" });
     }
 
     sendToAzure(blob) {
@@ -20,21 +38,31 @@ class CameraScreen extends Component {
                 alert('no');
                 console.warn(err);
             });
-            
+    }
+
+    updateWindowDimensions() {
+        this.setState({ width: window.innerWidth, height: window.innerHeight });
     }
 
     render() {
         return (
-            <div>
+            <React.Fragment>
                 <CameraRtc
                     onTakePicture={this.sendToAzure}
-                    facingMode="environment"
-                    width={160}
-                    height={0}
+                    facingMode={this.state.facingMode}
+                    width={this.state.width}
+                    height={this.state.height}
                     ref={r => this.cameraRef = r}
+                    style={{ borderRadius: 10, position: 'absolute', top: 0, zIndex: 1 }}
                 />
-                <button onClick={() => this.cameraRef.takePicture()}>GO</button>
-            </div>
+                <div className="CameraUI">
+                    <div className="BottomButtons">
+                        <button onClick={() => this.flipCamera()}>Flip camera</button>
+                        <button onClick={() => this.cameraRef.takePicture()}>GO</button>
+                        <button onClick={() => this.flipCamera()}>History</button>
+                    </div>
+                </div>
+            </React.Fragment>
         );
     }
 }

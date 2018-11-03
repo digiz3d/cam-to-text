@@ -1,10 +1,5 @@
 .CameraRtc {
-    background-color: red;
-    border: 1px solid blue;
-}
-
-.CameraRtc video {
-    background-color: greenyellow;
+    background-color: black;
 }
 
 .CameraRtc canvas {
