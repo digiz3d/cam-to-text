@@ -1,4 +1,5 @@
 import React from 'react';
+import { addEntry } from '../AppState.js';
 import CameraRtc from '../Components/CameraRtc.jsx';
 import axios from 'axios';
 
@@ -36,11 +37,23 @@ class CameraScreen extends React.Component {
             picture,
             { headers: { "Content-Type": "application/octet-stream", "Ocp-Apim-Subscription-Key": "yourkey" } })
             .then(response => {
-                alert(JSON.stringify(response.data));
-                console.log(response.data);
+                let phrase = "";
+                response.data.regions.forEach(region => {
+                    region.lines.forEach(line => {
+                        line.words.forEach(word => {
+                            phrase += word.text + " ";
+                        });
+                        phrase += "\n";
+                    });
+                });
+
+                if (phrase) {
+                    addEntry(phrase);
+                    this.props.history.push('/history');
+                }
             })
             .catch(err => {
-                alert('no');
+                alert(':(');
                 console.warn(err);
             });
     }
@@ -63,6 +76,7 @@ class CameraScreen extends React.Component {
                 <div className="CameraUI">
                     <div className="BottomButtons">
                         <img
+                            className="Button"
                             onClick={(e) => {
                                 e.preventDefault(); this.flipCamera();
                             }}
@@ -78,6 +92,7 @@ class CameraScreen extends React.Component {
                             src={ShootIcon}
                         />
                         <img
+                            className="Button"
                             onClick={(e) => { e.preventDefault(); this.props.history.push('/history'); }}
                             alt="History"
                             src={HistoryIcon}

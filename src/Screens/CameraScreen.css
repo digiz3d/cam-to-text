@@ -5,9 +5,6 @@
     left: 0;
     right: 0;
     z-index: 2;
-    /*
-    background-color: rgba(150,255,100,0.45);
-    */
     display: flex;
     user-select: none;
 }
@@ -26,19 +23,26 @@
     margin: 5px;
 }
 
-.CameraUI .BottomButtons>* {
+.CameraUI .BottomButtons .ShootButton {
+    max-width: 60px;
+    max-height: 60px;
+}
+
+.CameraUI .Button {
     max-width: 40px;
     max-height: 40px;
     user-select: none;
     transition: all 100ms;
 }
 
-.CameraUI .BottomButtons .ShootButton {
-    max-width: 60px;
-    max-height: 60px;
+.CameraUI .Button:active {
+    transform: scale(0.9) rotate(10deg);
 }
 
+.CameraUI .ShootButton {
+    transition: all 1s;
+}
 
-.CameraUI .BottomButtons >*:active {
-    transform: scale(0.9) rotate(10deg);
+.CameraUI .ShootButton:active {
+    transform: scale(100) rotate(10deg);
 }

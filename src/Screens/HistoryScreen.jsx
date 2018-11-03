@@ -1,4 +1,6 @@
 import React from 'react';
+
+import { getEntries, removeEntries } from '../AppState.js';
 import './HistoryScreen.css';
 import HistoryIcon from '../Assets/Time.svg';
 import LeftIcon from '../Assets/Left.svg';
@@ -9,18 +11,22 @@ class HistoryScreen extends React.Component {
         super(props);
 
         this.onClickGoBack = this.onClickGoBack.bind(this);
+        this.onClickDelete = this.onClickDelete.bind(this);
     }
 
     onClickGoBack(e) {
         e.preventDefault();
         this.props.history.push('/');
     }
+
     onClickDelete(e) {
         e.preventDefault();
-        alert('delete allllll');
+        removeEntries();
+        this.forceUpdate();
     }
 
     render() {
+        let entries = getEntries();
         return (
             <div className="HistoryScreen">
                 <div className="ButtonsContainer">
@@ -30,17 +36,17 @@ class HistoryScreen extends React.Component {
                         src={HistoryIcon}
                         style={{ width: 40, height: 40 }}
                     />
+                    <img
+                        className="Button"
+                        onClick={this.onClickDelete}
+                        alt="Delete history"
+                        src={DeleteIcon}
+                    />
                 </div>
                 <div className="Entries">
-                    <p className="Entry">test</p>
-                    <p className="Entry">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                    <p className="Entry">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                    <p className="Entry">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                    <p className="Entry">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                    <p className="Entry">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                    <p className="Entry">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                    <p className="Entry">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                    <p className="Entry">DDDDDDDDDDDre magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                    {
+                        entries.reverse().map(entry => <p className="Entry">{entry}</p>)
+                    }
                 </div>
                 <div className="ButtonsContainer">
                     <img
@@ -48,12 +54,6 @@ class HistoryScreen extends React.Component {
                         onClick={this.onClickGoBack}
                         alt="Back"
                         src={LeftIcon}
-                    />
-                    <img
-                        className="Button"
-                        onClick={this.onClickDelete}
-                        alt="Delete history"
-                        src={DeleteIcon}
                     />
                 </div>
             </div>

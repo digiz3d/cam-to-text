@@ -37,6 +37,10 @@
     transition: all 100ms;
 }
 
+.HistoryScreen .Button:active {
+    transform: scale(0.9) rotate(10deg);
+}
+
 .HistoryScreen .Entries {
     height: 100px;
     overflow: scroll;
@@ -54,4 +58,5 @@
     color: black;
     padding: 5px;
     margin-bottom: 5px;
+    white-space: pre;
 }
