@@ -21,5 +21,7 @@ modify the CameraScreen.jsx and enter your *API KEY*
 `yarn build`
 
 # Usage
-Build then host the static files on a host with HTTPS enabled (Chrome requires SSL in order to open media devices).  
-Open the website with your mobile device. Take a picture of some random text. You can now copy it from your phone
+Build the project, then host the static files.  
+Open the website with your mobile device.  
+Take a picture of some random text.  
+This text is now available in the palm of your hand :O
