@@ -33,9 +33,18 @@ class CameraScreen extends React.Component {
     }
 
     sendToAzure(picture) {
+        /*
+        This request used to be :
+        
         axios.post('https://westeurope.api.cognitive.microsoft.com/vision/v1.0/ocr?language=unk&detectOrientation=true',
             picture,
             { headers: { "Content-Type": "application/octet-stream", "Ocp-Apim-Subscription-Key": "yourkey" } })
+        
+        But now, I prefer using a proxy that automatically add the API KEY
+        */
+        axios.post('https://cam-to-text-function-app.azurewebsites.net/ocr', // this is the server proxy that hides the OCR API KEY
+            picture,
+            { headers: { "Content-Type": "application/octet-stream" } })
             .then(response => {
                 let phrase = "";
                 response.data.regions.forEach(region => {
@@ -50,6 +59,9 @@ class CameraScreen extends React.Component {
                 if (phrase) {
                     addEntry(phrase);
                     this.props.history.push('/history');
+                }
+                else {
+                    alert('>_<');
                 }
             })
             .catch(err => {
