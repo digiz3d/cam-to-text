@@ -1,6 +1,6 @@
 # Cam to Text
 
-http://cam-to-text.azurewebsites.net/
+http://cam-to-text.azurewebsites.net/  
 Simple Web App to convert IRL text to text in your phone. (can be used for books, movie titles, receipts...) 
 
 ## Project
