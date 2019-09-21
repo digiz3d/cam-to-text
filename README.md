@@ -1,5 +1,7 @@
 # Cam to Text
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/digiz3d/cam-to-text.svg)](https://greenkeeper.io/)
+
 http://cam-to-text.azurewebsites.net/  
 Simple Web App to convert IRL text to text in your phone. (can be used for books, movie titles, receipts...) 
 
